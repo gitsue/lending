@@ -1,0 +1,37 @@
+<% @title="Borrower Page"%>
+<form action="/online_lending/logout/" method="post">
+	<input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+	<input type="submit" value="Logout">	
+</form>
+
+<p>Name: <%= @borrower.fname %></p>
+<p>Amount Needed: $<%= @borrower.money %></p>
+<% if @raised >0%>
+	<p>Amount Raised: $<%= @raised %></p>
+<% else %>
+	<p>Amount Raised: All funds successfully raised!</p>
+<% end %>
+
+<h4>List of People who lent you money:</h4>
+<table>
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th>Email</th>
+			<th>Amount Lent</th>
+		</tr>
+	</thead>
+	<tbody>
+	<% if @lenders %>
+	<% @lenders.each do |lender| %>
+		<tr>
+			<td><%= lender.fname %> <%= lender.lname %></td>
+			<td><%= lender.email %></td>
+			<td>$<%= lender.moneylent%></td>
+		</tr>
+	<% end %>
+	<% else %>
+		<p>No one has lended you money yet...</p>
+	<% end %>
+	</tbody>
+</table>

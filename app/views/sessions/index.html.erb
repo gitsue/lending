@@ -1,0 +1,44 @@
+<% @title="Registration Page"%>
+
+<div id="sitecontent" style="#sitecontent:{ width: 970px;}">
+	<div id="lender" style="#lender{display:inline-block;}">
+		<% if flash[:lender_errors] %>
+		<% flash[:lender_errors].each do |error| %>
+		<p><%= error %></p>
+		<% end %>
+		<% end %>
+		<h1>Lender</h1>
+		<form action="/lender/register/" method="post">
+			<input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+			First Name: <input type="text" name="lender[fname]">
+			Last Name: <input type="text" name="lender[lname]">
+			Email: <input type="text" name="lender[email]">
+			Password: <input type="password" name="lender[password]">
+			Money: <input type="number" name="lender[money]" min="100" max="5000">
+			<input type="hidden" name="moneylent" value="0">
+			<input type="submit" value="Register">
+		</form>
+	</div>
+
+	<div id="borrower" style="#lender{display:inline-block;}">
+		<% if flash[:borrower_errors] %>
+		<% flash[:borrower_errors].each do |error| %>
+		<p><%= error %></p>
+		<% end %>
+		<% end %>
+		<h1>Borrower</h1>
+		<form action="/borrower/register" method="post">
+			<input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+			First Name: <input type="text" name="borrower[fname]">
+			Last Name: <input type="text" name="borrower[lname]">
+			Email: <input type="text" name="borrower[email]">
+			Password: <input type="password" name="borrower[password]">
+			Need Money For: <input type="text" name="borrower[purpose]">
+			Description: <textarea name="borrower[description]"></textarea>
+			Money: <input type="number" name="borrower[money]" min="100" max="5000">
+			<input type="hidden" name="borrower[raised]" value="0">
+			<input type="submit" value="Register">
+		</form>
+	</div>
+</div>
+<a href="/online_lending/login/">Already a member?</a>

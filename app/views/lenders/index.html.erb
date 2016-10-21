@@ -1,0 +1,77 @@
+<% @title="Lender Page"%>
+<form action="/online_lending/logout/" method="post">
+	<input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+	<input type="submit" value="Logout">	
+</form>
+<p>Name: <%= @lender.fname%></p>
+<% if @balance >=0%>
+	<p>Account Balance: $<%= @balance %></p>
+<% else %>
+	<p>Account Balance: You have insufficient funds!</p>
+<% end %>
+
+<h4>List of People in need of help:</h4>
+<table>
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th>Need Money for</th>
+			<th>Reason for loan</th>
+			<th>Amount Needed</th>
+			<th>Amount Raised</th>
+			<th>Action</th>
+		</tr>
+	</thead>
+	<tbody>
+		<% if @people_in_need %>
+		<% @people_in_need.each do |person|%>
+		<tr>
+			<td><%= person.fname %> <%= person.lname%></td>
+			<td><%= person.purpose %></td>
+			<td><%= person.description %></td>
+			<td>$<%= person.money %></td>
+			<td>$<%= person.raised %></td>
+			<td>
+				<form action="/lend/<%= person.id %>" method="post">
+					<input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+					<input type="number" name="moneylent" min="25" max="100">
+					<input type="submit" value="Lend">
+				</form>
+			</td>
+		</tr>
+		<% end %>
+		<% else %>
+		<p>There is no one that needs help...</p>
+		<% end %>
+	</tbody>
+</table>
+
+<h4>List of People you lent money to:</h4>
+<table>
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th>Need Money for</th>
+			<th>Reason for loan</th>
+			<th>Amount Needed</th>
+			<th>Amount Raised</th>
+			<th>Amount Lent</th>
+		</tr>
+	</thead>
+	<tbody>
+		<% if @borrowers %>
+		<% @borrowers.each do |borrower| %>	
+		<tr>
+			<td><%= borrower.borrower.fname%></td>
+			<td><%= borrower.borrower.purpose%></td>
+			<td><%= borrower.borrower.description%></td>
+			<td>$<%= borrower.borrower.money%></td>
+			<td>$<%= borrower.amount%></td>
+			<td>$<%= borrower.amount%></td>
+		</tr>
+		<% end %>
+		<% else %>
+		<p>No one has borrowed from you yet...</p>
+		<% end %>
+	</tbody>
+</table>
