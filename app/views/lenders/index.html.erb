@@ -6,11 +6,16 @@
 <p>Name: <%= @lender.fname%></p>
 <% if @balance >=0%>
 	<p>Account Balance: $<%= @balance %></p>
-<% else %>
-	<p>Account Balance: You have insufficient funds!</p>
 <% end %>
 
 <h4>List of People in need of help:</h4>
+<% if flash[:money_error] %>
+<p><%= flash[:money_error] %></p>
+<% end %>
+
+<% if flash[:money_error2] %>
+<p><%= flash[:money_error2] %></p>
+<% end %>
 <table>
 	<thead>
 		<tr>
@@ -60,14 +65,14 @@
 	</thead>
 	<tbody>
 		<% if @borrowers %>
-		<% @borrowers.each do |borrower| %>	
 		<tr>
-			<td><%= borrower.borrower.fname%></td>
-			<td><%= borrower.borrower.purpose%></td>
-			<td><%= borrower.borrower.description%></td>
-			<td>$<%= borrower.borrower.money%></td>
-			<td>$<%= borrower.amount%></td>
-			<td>$<%= borrower.amount%></td>
+			<% @borrowers.each do |b| %>
+			<td><%=b.borrower.fname %></td>
+			<td><%=b.borrower.purpose %></td>
+			<td><%=b.borrower.description %></td>
+			<td><%=b.borrower.money %></td>
+			<td><%=b.borrower.raised %></td>
+			<td><%=b.borrower.raised %></td>
 		</tr>
 		<% end %>
 		<% else %>

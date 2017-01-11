@@ -6,11 +6,7 @@
 
 <p>Name: <%= @borrower.fname %></p>
 <p>Amount Needed: $<%= @borrower.money %></p>
-<% if @raised >0%>
-	<p>Amount Raised: $<%= @raised %></p>
-<% else %>
-	<p>Amount Raised: All funds successfully raised!</p>
-<% end %>
+<p>Amount Raised: $<%= @borrower.raised %></p>
 
 <h4>List of People who lent you money:</h4>
 <table>
@@ -25,9 +21,9 @@
 	<% if @lenders %>
 	<% @lenders.each do |lender| %>
 		<tr>
-			<td><%= lender.fname %> <%= lender.lname %></td>
-			<td><%= lender.email %></td>
-			<td>$<%= lender.moneylent%></td>
+			<td><%= lender.lender.fname %> <%= lender.lender.lname %></td>
+			<td><%= lender.lender.email %></td>
+			<td>$<%= lender.amount%></td>
 		</tr>
 	<% end %>
 	<% else %>
